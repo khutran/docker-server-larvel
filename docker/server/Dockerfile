@@ -86,7 +86,7 @@ ADD composer.phar /usr/sbin/composer
 
 #config nginx
 RUN rm -rf /etc/nginx/nginx.conf
-ADD remote_nginx.conf /etc/nginx/conf.d/
+#ADD remote_nginx.conf /etc/nginx/conf.d/
 ADD nginx.conf /etc/nginx/
 
 #config apache 
