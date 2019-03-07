@@ -1,0 +1,51 @@
+version: '2'
+
+services:
+    server:
+        image: khutran/manager:0.5
+        container_name: server
+        networks:
+            vmms_network:
+                ipv4_address: 172.20.0.4
+        ports:
+            - '80:80'
+            - '443:443'
+        volumes:
+            - ./etc/nginx/conf.d:/etc/nginx/conf.d
+            - ./var/workspace:/var/www/workspace
+            - ./etc/letsencrypt/:/etc/letsencrypt/
+            - ./etc/httpd/conf.d/web:/etc/httpd/conf.d/web
+            - ./logs/nginx:/var/log/nginx
+        depends_on:
+            - mysql
+        restart: always
+
+    #MySQL config
+    mysql:
+        #build: ./docker/mysql
+        image: 'bitnami/mysql:latest'
+        container_name: mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: Quenanhdi123s
+            MYSQL_USER: vicoders
+            MYSQL_PASSWORD: Vmms123456@s
+            MYSQL_DATABASE: vicoders_db
+            MYSQL_ROOT_HOST: 0.0.0.0 
+       
+        networks:
+            vmms_network:
+                ipv4_address: 172.20.0.3
+        ports:
+            - '3306:3306'
+        volumes:
+            #- ./etc/mysql:/root
+            - ./var/lib/mysql:/bitnami
+            - ./etc/bitnami/mysql/conf:/opt/bitnami/mysql/conf
+            #- ./logs/mysql:/var/log/mysql
+        restart: always
+networks:
+  vmms_network:
+ 
+    ipam:
+       config:
+           - subnet: 172.20.0.0/16
