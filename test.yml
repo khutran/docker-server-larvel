@@ -2,7 +2,7 @@ version: '2'
 
 services:
     server:
-        image: khutran/manager:0.5
+        image: khutran/product:1
         container_name: server
         networks:
             vmms_network:
@@ -14,7 +14,6 @@ services:
             - ./etc/nginx/conf.d:/etc/nginx/conf.d
             - ./var/workspace:/var/www/workspace
             - ./etc/letsencrypt/:/etc/letsencrypt/
-            - ./etc/httpd/conf.d/web:/etc/httpd/conf.d/web
             - ./logs/nginx:/var/log/nginx
         depends_on:
             - mysql
