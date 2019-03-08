@@ -26,10 +26,10 @@ services:
         image: 'bitnami/mysql:latest'
         container_name: mysql
         environment:
-            MYSQL_ROOT_PASSWORD: Quenanhdi123s
+            MYSQL_ROOT_PASSWORD: xxxx
             MYSQL_USER: vicoders
-            MYSQL_PASSWORD: Vmms123456@s
-            MYSQL_DATABASE: vicoders_db
+            MYSQL_PASSWORD: xxx
+            MYSQL_DATABASE: xxxx
             MYSQL_ROOT_HOST: 0.0.0.0 
        
         networks:
