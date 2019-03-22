@@ -27,7 +27,6 @@ RUN    yum update -y && \
         php71w-json \
         php71w-mbstring \
         php71w-pdo \
-        php71w-common \
         php71w-devel
 
 RUN yum install -y wget openssl sed &&\
