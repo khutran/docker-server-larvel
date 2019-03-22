@@ -13,7 +13,7 @@ ENV nginxversion="1.12.2-1" \
         NAME_REMOTE_SERVER='test.com'
 
 RUN yum install -y epel-release && \
-        rpm -Uvh https://mirror.webtatic.com/yum/el6/latest.rpm
+        rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
 
 RUN    yum update -y && \
         yum install -y php71w-cli \
@@ -27,6 +27,7 @@ RUN    yum update -y && \
         php71w-json \
         php71w-mbstring \
         php71w-pdo \
+        php71w-common \
         php71w-devel
 
 RUN yum install -y wget openssl sed &&\
