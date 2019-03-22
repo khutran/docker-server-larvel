@@ -29,3 +29,19 @@
 
 ### IP table:   
 
+mkdir -p var/web
+
+mkdir -p var/www/certbot
+
+mkdir -p etc/nginx/conf.d
+
+mkdir -p etc/httpd/conf.d
+
+mkdir -p etc/bitnami/mysql/conf
+
+mkdir -p var/lib/mysql
+
+chown -R 1001:1001 var/lib
+
+chown -R 1001:1001 etc/bitnami
+
