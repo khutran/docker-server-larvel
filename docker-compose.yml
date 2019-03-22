@@ -1,56 +1,55 @@
-version: '2'
+version: "2"
 
 services:
+  #nginx web app
+  server:
+    build: ./docker/server
+    image: server:0.1
+    container_name: server
+    networks:
+      vmms_network:
+        ipv4_address: 172.20.0.4
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      #nginx conf
+      - ./etc/nginx/conf.d:/etc/nginx/conf.d
+      #- ./etc/nginx/snippets:/etc/nginx/snippets
+      - /var/www/web:/var/www/web
+      - ./var/www/certbot:/var/www/certbot
+      - ./etc/nginx/letsencrypt/:/etc/letsencrypt/
+      - ./etc/httpd/conf.d/web:/etc/httpd/conf.d/web
+      #- ./etc/nginx/nginx.conf:/etc/nginx/nginx.conf
+      #log
+      #- ./logs/nginx:/var/log/nginx
+    # depends_on:
+    #     - mysql
+    restart: always
 
-    #nginx web app
-    server:
-        build: ./docker/server
-        image: server:0.1
-        container_name: server
-        networks:
-            vmms_network:
-                ipv4_address: 172.20.0.4
-        ports:
-            - '80:80'
-            - '443:443'
-        volumes:
-            #nginx conf
-            - ./etc/nginx/conf.d:/etc/nginx/conf.d
-            #- ./etc/nginx/snippets:/etc/nginx/snippets
-            - /var/www/web:/var/www/web
-            - ./var/www/certbot:/var/www/certbot
-            - ./etc/nginx/letsencrypt/:/etc/letsencrypt/
-            - ./etc/httpd/conf.d/web:/etc/httpd/conf.d/web
-            #- ./etc/nginx/nginx.conf:/etc/nginx/nginx.conf
-            #log    
-            #- ./logs/nginx:/var/log/nginx
-        depends_on:
-            - mysql
-        restart: always
+  #MySQL config
+  mysql:
+    #build: ./docker/mysql
+    image: "bitnami/mysql:latest"
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: xxx
+      MYSQL_USER: vicoders
+      MYSQL_PASSWORD: xxx
+      MYSQL_DATABASE: xxx
+      MYSQL_ROOT_HOST: 0.0.0.0
 
-    #MySQL config
-    mysql:
-        #build: ./docker/mysql
-        image: 'bitnami/mysql:latest'
-        container_name: mysql
-        environment:
-            MYSQL_ROOT_PASSWORD: xxx
-            MYSQL_USER: vicoders
-            MYSQL_PASSWORD: xxx
-            MYSQL_DATABASE: xxx
-            MYSQL_ROOT_HOST: 0.0.0.0 
-       
-        networks:
-            vmms_network:
-                ipv4_address: 172.20.0.3
-        ports:
-            - '3306:3306'
-        volumes:
-            #- ./etc/mysql:/root
-            - ./var/lib/mysql:/bitnami
-            - ./etc/bitnami/mysql/conf:/opt/bitnami/mysql/conf
-            #- ./logs/mysql:/var/log/mysql
-        restart: always
+    networks:
+      vmms_network:
+        ipv4_address: 172.20.0.3
+    ports:
+      - "3306:3306"
+    volumes:
+      #- ./etc/mysql:/root
+      - ./var/lib/mysql:/bitnami
+      - ./etc/bitnami/mysql/conf:/opt/bitnami/mysql/conf
+      #- ./logs/mysql:/var/log/mysql
+    restart: always
 
 #volumes:
 #  db-data:
@@ -58,7 +57,6 @@ services:
 
 networks:
   vmms_network:
- 
     ipam:
-       config:
-           - subnet: 172.20.0.0/16
+      config:
+        - subnet: 172.20.0.0/16
