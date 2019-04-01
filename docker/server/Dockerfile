@@ -92,7 +92,7 @@ ADD nginx.conf /etc/nginx/
 RUN rm -rf /etc/httpd/conf/httpd.conf
 ADD httpd.conf /etc/httpd/conf/
 
-EXPOSE 80
+EXPOSE 80 443
 
 # Simple startup script to avoid some issues observed with container restart
 ADD run/mysql /usr/sbin/
